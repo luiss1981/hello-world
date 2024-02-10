@@ -6,8 +6,13 @@ jobs:
     - image: cimg/base:stable
     steps:
     - run: echo "Hola, mundo!"
-
+  adios:
+    docker:
+    - image: cimg/base:stable
+    steps:
+    - run: echo "Adiós, mundo!"
 workflows:
   hello:
     jobs:
     - saluda
+    - adios
