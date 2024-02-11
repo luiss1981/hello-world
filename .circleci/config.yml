@@ -1,18 +1,26 @@
 version: 2.1
 
 jobs:
-  saluda:
-    docker:
-    - image: cimg/base:stable
-    steps:
-    - run: echo "Hola, mundo!"
+  saluda: # nombre del job
+    docker: # tipo de ejecución
+    - image: cimg/base:stable # entorno o nombre de la imagen
+    steps: # pasos a seguir 
+    - run: echo "Hola, mundo!" # por ejemplo ejecutar un echo dentro de ubuntu
   adios:
     docker:
     - image: cimg/base:stable
     steps:
     - run: echo "Adiós, mundo!"
-workflows:
-  hello:
-    jobs:
+
+workflows: # flujo de trabajo
+  hello: # nombre del flujo de trabajo
+    jobs: # ejecucion de los jobs antes creados lo concurrentemente.
     - saluda
     - adios
+
+  adios:
+    jobs:
+    - saluda
+    - adios:
+        requires: 
+          - saluda
