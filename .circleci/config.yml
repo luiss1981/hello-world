@@ -11,6 +11,11 @@ jobs:
     - image: cimg/base:stable
     steps:
     - run: echo "Adiós, mundo!"
+  testing:
+    docker:
+    - image: cimg/base:stable
+    steps:
+    - run : echo "Testing"
 
 workflows: # flujo de trabajo
   hello: # nombre del flujo de trabajo
@@ -22,5 +27,15 @@ workflows: # flujo de trabajo
     jobs:
     - saluda
     - adios:
-        requires: 
-          - saluda
+        requires:
+        - saluda
+  test:
+    jobs:
+    - saluda
+    - adios:
+        requires:
+        - saluda
+    - testing:
+        type: approval
+        requires:
+        - adios
