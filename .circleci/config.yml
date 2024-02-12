@@ -16,7 +16,7 @@ jobs:
     - run:
         name: Deploy to EC2
         command: |
-          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
+          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem buntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
 
 workflows:
   version: 2
