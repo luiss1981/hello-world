@@ -16,10 +16,10 @@ jobs:
     - run:
         name: Deploy to EC2
         command: |
-          "whoami"
+          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
 
 workflows:
   deploy:
     jobs:
     - deploy
-   
+
