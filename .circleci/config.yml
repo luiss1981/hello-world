@@ -17,6 +17,7 @@ jobs:
         name: Deploy to EC2
         command: |
            "python3"
+           "print('hola desde python')"
 
 workflows:
   deploy:
