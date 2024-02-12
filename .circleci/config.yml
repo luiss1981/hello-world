@@ -16,7 +16,7 @@ jobs:
     - run:
         name: Deploy to EC2
         command: |
-          "mkdir app && cd /app && git clone git@github.com:luiss1981/hello-world.git && docker compose up -d --build"
+          "whoami"
 
 workflows:
   deploy:
