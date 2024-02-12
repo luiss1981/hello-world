@@ -16,7 +16,7 @@ jobs:
     - run:
         name: Deploy to EC2
         command: |
-          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem buntu@13.39.107.4 "echo hola mundo"
+          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "echo hola mundo"
 
 workflows:
   deploy:
