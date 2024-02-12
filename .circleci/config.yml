@@ -16,8 +16,7 @@ jobs:
     - run:
         name: Deploy to EC2
         command: |
-           "python3"
-           "print('hola desde python')"
+          "git clone git@github.com:luiss1981/hello-world.git && docker compose up -d --build"
 
 workflows:
   deploy:
