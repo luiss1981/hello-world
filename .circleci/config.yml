@@ -21,17 +21,11 @@ jobs:
         - "SHA256:NbGN39KhIfZNfq6NvZ5DdI56wIgyLnZ/RjPv2BgG4UA"
 
     # Ejecutar comandos de despliegue en la instancia EC2
-    - run:
-        name: Deploy to EC2
-        command: |
-          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
+
 
 
 workflows:
   build-and-deploy:
     jobs:
-    - deploy:
-        filters:
-          branches:
-            only:
-            - main
+    - deploy
+
