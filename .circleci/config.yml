@@ -1,27 +1,18 @@
 version: 2.1
 
 jobs:
-  deploy:
+  build:
     docker:
     - image: circleci/python:3.10
 
     steps:
     - checkout
 
-    # Instalar Docker y Docker Compose
-    - run:
-        name: Install Docker and Docker Compose
-        command: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io docker-compose
-
-    # Copiar clave SSH al contenedor
-    - add_ssh_keys:
-        fingerprints:
+    add_ssh_keys:
+      fingerprints:
         - "SHA256:NbGN39KhIfZNfq6NvZ5DdI56wIgyLnZ/RjPv2BgG4UA"
-
-    # Ejecutar comandos de despliegue en la instancia EC2
-
+      run:
+        echo "Add your SSH key fingerprints here"
 
 
 workflows:
