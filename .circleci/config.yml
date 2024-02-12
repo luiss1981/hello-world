@@ -1,22 +1,29 @@
 version: 2.1
 
 jobs:
-  build:
+  deploy:
     docker:
     - image: circleci/python:3.10
 
     steps:
     - checkout
 
-    add_ssh_keys:
-      fingerprints:
+    # Copiar la clave SSH al contenedor
+    - add_ssh_keys:
+        fingerprints:
         - "SHA256:NbGN39KhIfZNfq6NvZ5DdI56wIgyLnZ/RjPv2BgG4UA"
-      run:
-        echo "Add your SSH key fingerprints here"
-
+    # Ejecutar el despliegue en la instancia EC2
+    - run:
+        name: Deploy to EC2
+        command: |
+          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
 
 workflows:
-  build-and-deploy:
+  version: 2
+  deploy:
     jobs:
-    - deploy
-
+    - deploy:
+        filters:
+          branches:
+            only:
+            - main
