@@ -1,41 +1,37 @@
 version: 2.1
 
 jobs:
-  saluda: # nombre del job
-    docker: # tipo de ejecución
-    - image: cimg/base:stable # entorno o nombre de la imagen
-    steps: # pasos a seguir 
-    - run: echo "Hola, mundo!" # por ejemplo ejecutar un echo dentro de ubuntu
-  adios:
+  deploy:
     docker:
-    - image: cimg/base:stable
-    steps:
-    - run: echo "Adiós, mundo!"
-  testing:
-    docker:
-    - image: cimg/base:stable
-    steps:
-    - run : echo "Testing"
+    - image: circleci/python:3.10
 
-workflows: # flujo de trabajo
-  hello: # nombre del flujo de trabajo
-    jobs: # ejecucion de los jobs antes creados lo concurrentemente.
-    - saluda
-    - adios
+    steps:
+    - checkout
 
-  adios:
+    # Instalar Docker y Docker Compose
+    - run:
+        name: Install Docker and Docker Compose
+        command: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io docker-compose
+
+    # Copiar clave SSH al contenedor
+    - add_ssh_keys:
+        fingerprints:
+        - "SHA256:NbGN39KhIfZNfq6NvZ5DdI56wIgyLnZ/RjPv2BgG4UA"
+
+    # Ejecutar comandos de despliegue en la instancia EC2
+    - run:
+        name: Deploy to EC2
+        command: |
+          ssh -i /home/luis/Descargas/pruebas_keys_luis.pem ubuntu@13.39.107.4 "cd /app && git pull origin main && docker-compose up -d --build"
+
+
+workflows:
+  build-and-deploy:
     jobs:
-    - saluda
-    - adios:
-        requires:
-        - saluda
-  test:
-    jobs:
-    - saluda
-    - adios:
-        requires:
-        - saluda
-    - testing:
-        type: approval
-        requires:
-        - adios
+    - deploy:
+        filters:
+          branches:
+            only:
+            - main
